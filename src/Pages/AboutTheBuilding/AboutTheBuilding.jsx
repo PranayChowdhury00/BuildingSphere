@@ -23,7 +23,7 @@ const AboutTheBuilding = () => {
         </div>
 
         {/* Text Section */}
-        <div className="w-full md:w-1/2 h-[600px] px-6 ">
+        <div className="w-full md:w-1/2 h-[600px] px-6 mb-64  md:mb-0">
           <h3 className="text-2xl font-semibold text-sky-400 mb-4">Building Features</h3>
           <ul className="space-y-1 text-lg text-gray-900">
             <li>✅ Modern architectural design with high ceilings</li>
