@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user, signOutUser, loader, setLoader } = useContext(AuthContext);
 
   const handelLogOut = () => {
-    setLoader(true); // Show loader
+     
     signOutUser()
       .then(() => {
         console.log("User logged out successfully");
@@ -16,7 +16,7 @@ const Navbar = () => {
         console.error("Logout Error:", err.message);
       })
       .finally(() => {
-        setLoader(false); // Hide loader
+       
       });
   };
 

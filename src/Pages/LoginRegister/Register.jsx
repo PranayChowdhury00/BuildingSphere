@@ -1,15 +1,51 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
-import { updateProfile } from "firebase/auth"; 
+import { updateProfile } from "firebase/auth";
 import logo from "/logo.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const Register = () => {
   const { createNewUser, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  const validatePassword = (password) => {
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasMinLength = password.length >= 6;
+
+    if (!hasUppercase) {
+      Swal.fire({
+        icon: "error",
+        title: "Password Error",
+        text: "Password must contain at least one uppercase letter.",
+      });
+      return false;
+    }
+
+    if (!hasLowercase) {
+      Swal.fire({
+        icon: "error",
+        title: "Password Error",
+        text: "Password must contain at least one lowercase letter.",
+      });
+      return false;
+    }
+
+    if (!hasMinLength) {
+      Swal.fire({
+        icon: "error",
+        title: "Password Error",
+        text: "Password must be at least 6 characters long.",
+      });
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +53,11 @@ const Register = () => {
     const email = e.target.email.value;
     const photoUrl = e.target.photoUrl.value;
     const password = e.target.password.value;
+
+    // Validate password before proceeding
+    if (!validatePassword(password)) {
+      return;
+    }
 
     createNewUser(email, password)
       .then((result) => {
@@ -29,23 +70,43 @@ const Register = () => {
         });
       })
       .then(() => {
-        console.log("User profile updated");
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful",
+          text: "Your account has been created successfully.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate("/");
         e.target.reset();
       })
       .catch((error) => {
-        console.error("Error updating profile:", error.message);
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
   };
 
   const handleGoogle = () => {
     googleSignIn()
       .then((result) => {
-        console.log(result.user);
+        Swal.fire({
+          icon: "success",
+          title: "Google Sign-In Successful",
+          text: "Welcome to the application!",
+        });
         navigate("/");
       })
       .catch((error) => {
-        console.error("Error with Google Sign-In:", error.message);
+        Swal.fire({
+          icon: "error",
+          title: "Google Sign-In Failed",
+          text: error.message,
+        });
       });
   };
 
