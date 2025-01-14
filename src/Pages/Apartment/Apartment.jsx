@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Apartment = () => {
@@ -36,7 +36,9 @@ const Apartment = () => {
     const fetchUserAgreements = async () => {
       if (user) {
         try {
-          const response = await axios.get(`http://localhost:5000/agreements?email=${user.email}`);
+          const response = await axios.get(
+            `http://localhost:5000/agreements?email=${user.email}`
+          );
           setUserAgreements(response.data);
         } catch (err) {
           console.log("Failed to fetch user agreements:", err);
@@ -76,7 +78,11 @@ const Apartment = () => {
   };
 
   if (loading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
+    return (
+      <div className="flex justify-center items-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
   }
 
   if (error) {
@@ -118,7 +124,7 @@ const Apartment = () => {
           title: "Agreement Submitted!",
           text: "Your agreement request has been successfully submitted.",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
 
         setDisabledApartments((prev) => [...prev, id]);
@@ -129,14 +135,17 @@ const Apartment = () => {
         title: "Submission Failed!",
         text: "Failed to submit your agreement request. Please try again.",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
     }
   };
 
   // Pagination logic
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentApartments = filteredApartments.slice(startIndex, startIndex + itemsPerPage);
+  const currentApartments = filteredApartments.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
   const totalPages = Math.ceil(filteredApartments.length / itemsPerPage);
 
   return (
@@ -177,9 +186,12 @@ const Apartment = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentApartments.map((apartment) => {
-          const isDisabled = disabledApartments.includes(apartment._id) || 
-                             userAgreements.some(agreement => agreement.apartmentNo === apartment.apartmentNo);
-                             
+          const isDisabled =
+            disabledApartments.includes(apartment._id) ||
+            userAgreements.some(
+              (agreement) => agreement.apartmentNo === apartment.apartmentNo
+            );
+
           return (
             <div
               key={apartment._id}
@@ -199,7 +211,9 @@ const Apartment = () => {
                 <p className="text-gray-600">Rent: ${apartment.rent}</p>
                 <button
                   onClick={() => handelAgreementBtn(apartment._id)}
-                  className={`mt-4 px-4 py-2 bg-blue-500 text-white rounded-md ${isDisabled ? "bg-gray-500 cursor-not-allowed" : ""}`}
+                  className={`mt-4 px-4 py-2 bg-blue-500 text-white rounded-md ${
+                    isDisabled ? "bg-gray-500 cursor-not-allowed" : ""
+                  }`}
                   disabled={isDisabled}
                 >
                   {isDisabled ? "Agreement Submitted" : "View Agreement"}
@@ -223,13 +237,19 @@ const Apartment = () => {
           <button
             key={index}
             onClick={() => setCurrentPage(index + 1)}
-            className={`px-3 py-1 mx-1 rounded ${currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+            className={`px-3 py-1 mx-1 rounded ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
           >
             {index + 1}
           </button>
         ))}
         <button
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
           className="px-3 py-1 mx-1 bg-gray-200 rounded"
           disabled={currentPage === totalPages}
         >
