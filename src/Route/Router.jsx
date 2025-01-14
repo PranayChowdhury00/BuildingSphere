@@ -8,6 +8,8 @@ import PrivetRoute from "./PrivetRoute/PrivetRoute";
 import UserDashboard from "../Pages/UserDashboard/UserDashboard";
 import MyProfile from "../Components/Announcements/MyProfile";
 import Announcements from "../Components/Announcements/Announcements";
+import MakePayment from "../Pages/MakePayment/MakePayment";
+import PaymentPage from "../Pages/PaymentPage/PaymentPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
         path: "announcements",
         element: <Announcements></Announcements>, 
       },
+      {
+        path:'make-payment',
+        element:<MakePayment></MakePayment>
+      },
+      {
+        path:'payMentPage',
+        element:<PaymentPage></PaymentPage>
+      }
     ],
   },
 ]);

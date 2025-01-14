@@ -7,8 +7,8 @@ import CouponBuy1 from '../../assets/Coupon/buy1.avif';
 const coupons = [
   {
     id: 1,
-    title: "50% Off on Electronics",
-    description: "Get 50% off on all electronic items. Valid for a limited time only.",
+    title: "50% Off on apartment",
+    description: "Get 50% off on all apartment items. Valid for a limited time only.",
     discount: "50%",
     code: "ELEC50",
     expiration: "2025-12-31",
@@ -16,8 +16,8 @@ const coupons = [
   },
   {
     id: 2,
-    title: "20% Off on Clothing",
-    description: "Save 20% on all clothing items. Use code at checkout.",
+    title: "20% Off on apartment",
+    description: "Save 20% on all apartment . Use code at checkout.",
     discount: "20%",
     code: "CLOTH20",
     expiration: "2025-06-30",
@@ -25,8 +25,8 @@ const coupons = [
   },
   {
     id: 3,
-    title: "Buy 1 Get 1 Free on Coffee",
-    description: "Buy one coffee and get one free. Perfect for coffee lovers!",
+    title: "30% Off on apartment",
+    description: "Buy one apartment in 30% off. Perfect for new apartment lovers!",
     discount: "BOGO",
     code: "COFFEEBOGO",
     expiration: "2025-08-15",

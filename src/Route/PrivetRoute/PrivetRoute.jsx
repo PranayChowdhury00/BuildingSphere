@@ -5,10 +5,10 @@ import { Navigate} from "react-router-dom";
 
 
 const PrivetRoute = ({children}) => {
-    const {user,loading}=useContext(AuthContext);
+    const {user,loader}=useContext(AuthContext);
     // const location = useLocation();
 
-    if(loading){
+    if(loader){
         return <div className="flex justify-center items-center">
             <span className="loading loading-spinner loading-lg"></span>
         </div>

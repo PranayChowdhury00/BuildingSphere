@@ -11,6 +11,7 @@ const Apartment = () => {
   const [error, setError] = useState(null);
   const [disabledApartments, setDisabledApartments] = useState([]);
   const [userAgreements, setUserAgreements] = useState([]);
+  const [appliedApartment, setAppliedApartment] = useState(null);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,6 +40,11 @@ const Apartment = () => {
           const response = await axios.get(
             `http://localhost:5000/agreements?email=${user.email}`
           );
+          if (response.data.length > 0) {
+            const applied = response.data[0];
+            setAppliedApartment(applied.apartmentNo);
+            setDisabledApartments([applied.apartmentNo]);
+          }
           setUserAgreements(response.data);
         } catch (err) {
           console.log("Failed to fetch user agreements:", err);
@@ -99,6 +105,15 @@ const Apartment = () => {
       return;
     }
 
+    if (appliedApartment) {
+      Swal.fire({
+        icon: "error",
+        title: "Agreement Already Submitted",
+        text: "You can only apply for one apartment.",
+      });
+      return;
+    }
+
     const apartment = apartments.find((apartment) => apartment._id === id);
 
     const agreementData = {
@@ -128,15 +143,24 @@ const Apartment = () => {
         });
 
         setDisabledApartments((prev) => [...prev, id]);
+        setAppliedApartment(apartment.apartmentNo);
       }
     } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "Submission Failed!",
-        text: "Failed to submit your agreement request. Please try again.",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      if (err.response && err.response.status === 400) {
+        Swal.fire({
+          icon: "error",
+          title: "Already Applied",
+          text: err.response.data.message,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Submission Failed!",
+          text: "Failed to submit your agreement request. Please try again.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
   };
 
