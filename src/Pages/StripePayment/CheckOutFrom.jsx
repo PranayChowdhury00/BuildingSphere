@@ -1,4 +1,3 @@
-
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
@@ -13,15 +12,17 @@ const CheckOutFrom = () => {
   const [agreement, setAgreement] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
-const [transactionId,setTransactionId] = useState('');
+  const [transactionId, setTransactionId] = useState("");
   const totalPrice = agreement?.rent;
-console.log(clientSecret);
+  
   // Fetch the user's agreement
   useEffect(() => {
     let isMounted = true; // To prevent state updates on unmounted components
     const fetchAgreement = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/agreements?email=${user?.email}`);
+        const response = await axios.get(
+          `${API_BASE_URL}/agreements?email=${user?.email}`
+        );
         if (isMounted && response.data && response.data.length > 0) {
           setAgreement(response.data[0]);
         }
@@ -39,9 +40,12 @@ console.log(clientSecret);
     if (totalPrice) {
       const fetchClientSecret = async () => {
         try {
-          const response = await axios.post(`http://localhost:5000/create-payment-intent`, {
-            price: totalPrice,
-          });
+          const response = await axios.post(
+            `http://localhost:5000/create-payment-intent`,
+            {
+              price: totalPrice,
+            }
+          );
           setClientSecret(response?.data?.clientSecret);
         } catch (err) {
           console.error("Failed to create payment intent:", err);
@@ -66,10 +70,11 @@ console.log(clientSecret);
       return;
     }
 
-    const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
-    });
+    const { error: stripeError, paymentMethod } =
+      await stripe.createPaymentMethod({
+        type: "card",
+        card,
+      });
 
     if (stripeError) {
       console.error("Payment Method Error:", stripeError);
@@ -80,26 +85,37 @@ console.log(clientSecret);
     }
 
     //confirm payment
-    const {paymentIntent,error:confirmError}=await stripe.confirmCardPayment(clientSecret,{
-        payment_method:{
-            card:card,
-            billing_details:{
-                email:user?.email || 'n/a',
-                name:user?.displayName  || 'n/a'
-            }
-        }
-    })
-    if(confirmError){
-        console.log('confirm error');
-    }
-    else{
-        console.log('payment intent',paymentIntent);
-        if(paymentIntent.status === 'succeeded'){
-            console.log("transaction id",paymentIntent.id);
-            setTransactionId(paymentIntent.id)
-        }
-    }
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            email: user?.email || "n/a",
+            name: user?.displayName || "n/a",
+          },
+        },
+      });
+    if (confirmError) {
+      console.log("confirm error");
+    } else {
+      console.log("payment intent", paymentIntent);
+      if (paymentIntent.status === "succeeded") {
+        console.log("transaction id", paymentIntent.id);
+        setTransactionId(paymentIntent.id);
 
+        // save the data in database
+        const payment = {
+          email: user?.email,
+          price: totalPrice,
+          transactionId: paymentIntent.id,
+          date: new Date(),
+          id:agreement?._id
+
+        };
+        const res = await axios.post("http://localhost:5000/payment", payment);
+        console.log("payment save", res?.data);
+      }
+    }
   };
 
   return (
@@ -128,7 +144,9 @@ console.log(clientSecret);
         Pay
       </button>
       {error && <p className="text-red-500 mt-2">{error}</p>}
-      {transactionId && <p className="text-green-500">Your transaction id:{transactionId}</p>}
+      {transactionId && (
+        <p className="text-green-500">Your transaction id:{transactionId}</p>
+      )}
     </form>
   );
 };

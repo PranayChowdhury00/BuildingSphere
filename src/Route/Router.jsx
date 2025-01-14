@@ -10,6 +10,7 @@ import MyProfile from "../Components/Announcements/MyProfile";
 import Announcements from "../Components/Announcements/Announcements";
 import MakePayment from "../Pages/MakePayment/MakePayment";
 import PaymentPage from "../Pages/PaymentPage/PaymentPage";
+import PaymentHistory from "../Pages/PaymentPage/PaymentHistory";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path:'payMentPage',
         element:<PaymentPage></PaymentPage>
+      },
+      {
+        path:'payment-history',
+        element:<PaymentHistory></PaymentHistory>
       }
     ],
   },
