@@ -84,7 +84,7 @@ const UserDashboard = () => {
           {/* Conditionally render "My Profile" and "Announcements" if the user is not an admin */}
           {!admin && (
             <>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <Link
                   to="/dashboard/profile"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -92,7 +92,7 @@ const UserDashboard = () => {
                   My Profile
                 </Link>
               </li>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <Link
                   to="/dashboard/announcements"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -106,7 +106,7 @@ const UserDashboard = () => {
           {/* Conditionally render "Make Payment" and "Payment History" */}
           {member && (
             <>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <Link
                   to="/dashboard/make-payment"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -114,7 +114,7 @@ const UserDashboard = () => {
                   Make Payment
                 </Link>
               </li>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <Link
                   to="/dashboard/payment-history"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -128,7 +128,7 @@ const UserDashboard = () => {
           {/* Conditionally render for admin */}
           {admin && (
             <>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <NavLink
                   to="/dashboard/adminProfile"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -136,7 +136,7 @@ const UserDashboard = () => {
                   Admin Profile
                 </NavLink>
               </li>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <NavLink
                   to="/dashboard/manage-members"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -144,7 +144,7 @@ const UserDashboard = () => {
                   Manage Members
                 </NavLink>
               </li>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <NavLink
                   to="/dashboard/makeAnnouncements"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -152,7 +152,7 @@ const UserDashboard = () => {
                   Make Announcement
                 </NavLink>
               </li>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <NavLink
                   to="/dashboard/agreementRequest"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -160,7 +160,7 @@ const UserDashboard = () => {
                   Agreement Requests
                 </NavLink>
               </li>
-              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 hover:bg-sky-300">
+              <li className="py-3 bg-base-100 px-3 rounded-xl mb-5 ">
                 <NavLink
                   to="/dashboard/manage-coupons"
                   className="text-sky-500 font-bold text-xl hover:text-sky-700"
@@ -171,7 +171,7 @@ const UserDashboard = () => {
             </>
           )}
 
-          <li className="py-3 bg-base-100 px-3 rounded-xl hover:bg-sky-300">
+          <li className="py-3 bg-base-100 px-3 rounded-xl ">
             <Link
               className="text-sky-500 font-bold text-xl hover:text-sky-700"
               to="/"
