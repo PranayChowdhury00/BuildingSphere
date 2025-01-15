@@ -2,59 +2,31 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const Apartment = () => {
   const { user } = useContext(AuthContext);
-  const [apartments, setApartments] = useState([]);
   const [filteredApartments, setFilteredApartments] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [disabledApartments, setDisabledApartments] = useState([]);
-  const [userAgreements, setUserAgreements] = useState([]);
   const [appliedApartment, setAppliedApartment] = useState(null);
 
-  // Pagination state
+  const { data: apartments = [], isLoading, isError, error } = useQuery({
+    queryKey: ['apartments'],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:5000/apartments");
+      return response.data;
+    },
+  });
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  // Rent range state
   const [minRent, setMinRent] = useState("");
   const [maxRent, setMaxRent] = useState("");
 
   useEffect(() => {
-    const fetchApartments = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/apartments");
-        setApartments(response.data);
-        setFilteredApartments(response.data); // Initially show all apartments
-      } catch (err) {
-        setError("Failed to fetch apartments");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchUserAgreements = async () => {
-      if (user) {
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/agreements?email=${user.email}`
-          );
-          if (response.data.length > 0) {
-            const applied = response.data[0];
-            setAppliedApartment(applied.apartmentNo);
-            setDisabledApartments([applied.apartmentNo]);
-          }
-          setUserAgreements(response.data);
-        } catch (err) {
-          console.log("Failed to fetch user agreements:", err);
-        }
-      }
-    };
-
-    fetchApartments();
-    fetchUserAgreements();
-  }, [user]);
+    setFilteredApartments(apartments);
+  }, [apartments]);
 
   const handleSearch = () => {
     const min = parseInt(minRent, 10);
@@ -73,7 +45,7 @@ const Apartment = () => {
       (apartment) => apartment.rent >= min && apartment.rent <= max
     );
     setFilteredApartments(filtered);
-    setCurrentPage(1); // Reset to first page after filtering
+    setCurrentPage(1);
   };
 
   const handleShowAll = () => {
@@ -83,7 +55,7 @@ const Apartment = () => {
     setCurrentPage(1);
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center">
         <span className="loading loading-spinner loading-lg"></span>
@@ -91,11 +63,11 @@ const Apartment = () => {
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (isError) {
+    return <div>Error: {error.message}</div>;
   }
 
-  const handelAgreementBtn = async (id) => {
+  const handleAgreementBtn = async (id) => {
     if (!user) {
       Swal.fire({
         icon: "warning",
@@ -124,7 +96,7 @@ const Apartment = () => {
       apartmentNo: apartment.apartmentNo,
       rent: apartment.rent,
       status: "pending",
-      role :'user'
+      role: "user",
     };
 
     try {
@@ -147,25 +119,16 @@ const Apartment = () => {
         setAppliedApartment(apartment.apartmentNo);
       }
     } catch (err) {
-      if (err.response && err.response.status === 400) {
-        Swal.fire({
-          icon: "error",
-          title: "Already Applied",
-          text: err.response.data.message,
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Submission Failed!",
-          text: "Failed to submit your agreement request. Please try again.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
+      Swal.fire({
+        icon: "error",
+        title: "Submission Failed!",
+        text: "Failed to submit your agreement request. Please try again.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
-  // Pagination logic
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentApartments = filteredApartments.slice(
     startIndex,
@@ -179,7 +142,6 @@ const Apartment = () => {
         Available Apartments
       </h2>
 
-      {/* Search Section */}
       <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-4 mb-6">
         <input
           type="number"
@@ -213,9 +175,7 @@ const Apartment = () => {
         {currentApartments.map((apartment) => {
           const isDisabled =
             disabledApartments.includes(apartment._id) ||
-            userAgreements.some(
-              (agreement) => agreement.apartmentNo === apartment.apartmentNo
-            );
+            appliedApartment === apartment.apartmentNo;
 
           return (
             <div
@@ -235,7 +195,7 @@ const Apartment = () => {
                 <p className="text-gray-600">Block: {apartment.blockName}</p>
                 <p className="text-gray-600">Rent: ${apartment.rent}</p>
                 <button
-                  onClick={() => handelAgreementBtn(apartment._id)}
+                  onClick={() => handleAgreementBtn(apartment._id)}
                   className={`mt-4 px-4 py-2 bg-blue-500 text-white rounded-md ${
                     isDisabled ? "bg-gray-500 cursor-not-allowed" : ""
                   }`}
@@ -249,7 +209,6 @@ const Apartment = () => {
         })}
       </div>
 
-      {/* Pagination controls */}
       <div className="flex justify-center items-center mt-6">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
