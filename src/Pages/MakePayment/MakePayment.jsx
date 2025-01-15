@@ -1,38 +1,55 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const MakePayment = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [agreement, setAgreement] = useState(null);
   const [month, setMonth] = useState("");
 
-  // Fetch the agreement details when the component loads
-  useEffect(() => {
-    const fetchAgreement = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/agreements?email=${user?.email}`
-        );
-        if (response.data && response.data.length > 0) {
-          setAgreement(response.data[0]);
-        }
-      } catch (error) {
-        console.error("Failed to fetch agreement data:", error);
-      }
-    };
-    fetchAgreement();
-  }, [user?.email]);
+
+  const {
+    data: agreement = null,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["agreement", user?.email], 
+    queryFn: async () => {
+      if (!user?.email) return null; 
+      const response = await axios.get(
+        `http://localhost:5000/agreements?email=${user.email}`
+      );
+      return response.data?.[0] || null; 
+    },
+    enabled: !!user?.email, 
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate("/payment-page");
   };
 
-  if (!agreement) {
+  if (isLoading) {
     return <div className="text-center text-xl">Loading...</div>;
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center text-red-500">
+        <p>Failed to fetch agreement data: {error.message}</p>
+      </div>
+    );
+  }
+
+  if (!agreement) {
+    return (
+      <div className="text-center text-xl">
+        <p>No agreement data found for the current user.</p>
+      </div>
+    );
   }
 
   return (
@@ -54,7 +71,7 @@ const MakePayment = () => {
           <label className="font-medium text-gray-700">Floor:</label>
           <input
             type="text"
-            value={agreement?.floorNo}
+            value={agreement.floorNo}
             readOnly
             className="p-2 border rounded-md bg-gray-100 text-gray-600"
           />
@@ -99,24 +116,14 @@ const MakePayment = () => {
           />
         </div>
 
-        {agreement ? (
-          <Link to="/dashboard/payMentPage">
-            <button
-              type="submit"
-              className="w-full py-2 bg-green-600 text-white rounded-md mt-4 hover:bg-green-700"
-            >
-              Pay
-            </button>
-          </Link>
-        ) : (
+        <Link to="/dashboard/payMentPage">
           <button
-            disabled
             type="submit"
             className="w-full py-2 bg-green-600 text-white rounded-md mt-4 hover:bg-green-700"
           >
             Pay
           </button>
-        )}
+        </Link>
       </form>
     </div>
   );
