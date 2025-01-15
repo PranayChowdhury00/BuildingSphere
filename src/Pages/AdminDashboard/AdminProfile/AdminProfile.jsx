@@ -5,6 +5,7 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 const AdminProfile = () => {
     const {user}=useContext(AuthContext);
     const [adminData, setAdminData] = useState(null);
+    console.log(adminData);
     useEffect(()=>{
         const fetchAdminData = async () => {
         try{
@@ -33,7 +34,7 @@ const AdminProfile = () => {
         <h2 className="text-3xl font-bold text-center mb-5">Admin Profile</h2>
         <div className="profile-info flex justify-center items-center gap-5">
           <img
-            src={adminData.photoUrl || "/default-image.jpg"} // If no image is provided, show a default image
+            src={adminData.photoUrl || "/default-image.jpg"} 
             alt="Admin"
             className="w-32 h-32 rounded-full border-2 border-gray-300"
           />

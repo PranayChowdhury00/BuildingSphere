@@ -16,6 +16,7 @@ import MakeAnnouncement from "../Pages/AdminDashboard/MakeAnnouncement/MakeAnnou
 import AgreementRequests from "../Pages/AdminDashboard/AgreementRequest/AgreementRequests";
 import ManageMembers from "../Pages/AdminDashboard/ManageMembers/ManageMembers";
 import CouponsTable from "../Pages/AdminDashboard/CouponsTable/CouponsTable";
+import Page404 from "../Page404/Page404";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path:'*',
+    element:<Page404></Page404>
+  }
 ]);
 
 export default router;
