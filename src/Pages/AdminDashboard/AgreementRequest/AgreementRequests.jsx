@@ -43,7 +43,7 @@ const AgreementRequests = () => {
           },
           body: JSON.stringify({
             role: 'member',
-            status: 'approved',
+            status: 'checked', // You can change the status to 'approved' or whatever makes sense
           }),
         });
   
@@ -55,6 +55,9 @@ const AgreementRequests = () => {
             )
           );
           Swal.fire('Accepted!', 'The agreement has been accepted.', 'success');
+          
+          // Optionally, remove accepted agreements from the view
+          setAgreements((prev) => prev.filter((agreement) => agreement._id !== id)); // Remove from table
         } else {
           Swal.fire('Error!', 'Failed to accept the agreement.', 'error');
         }
@@ -65,7 +68,6 @@ const AgreementRequests = () => {
     }
   };
   
-
   const handleReject = async (id) => {
     try {
       const result = await Swal.fire({
@@ -77,12 +79,12 @@ const AgreementRequests = () => {
         cancelButtonColor: '#3085d6',
         confirmButtonText: 'Yes, reject it!',
       });
-
+  
       if (result.isConfirmed) {
         const response = await fetch(`http://localhost:5000/agreements/${id}`, {
           method: 'DELETE',
         });
-
+  
         if (response.ok) {
           setAgreements((prev) => prev.filter((agreement) => agreement._id !== id));
           Swal.fire('Rejected!', 'The agreement has been rejected.', 'success');
@@ -95,6 +97,7 @@ const AgreementRequests = () => {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <div className="p-8">
