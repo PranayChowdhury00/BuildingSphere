@@ -15,7 +15,7 @@ const MyProfile = () => {
     <div className="py-5">
       <div className="card bg-base-100  md:w-96 shadow-xl">
         <figure>
-          <img src={user?.photoURL} alt="Shoes" />
+          <img src={user?.photoURL} alt="photo" />
         </figure>
         <div className="card-body">
           <p>

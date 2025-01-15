@@ -2,8 +2,9 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "";
 
 const CheckOutFrom = () => {
   const { user } = useContext(AuthContext);
@@ -21,7 +22,7 @@ const CheckOutFrom = () => {
     const fetchAgreement = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/agreements?email=${user?.email}`
+          `http://localhost:5000/agreements?email=${user?.email}`
         );
         if (isMounted && response.data && response.data.length > 0) {
           setAgreement(response.data[0]);
@@ -96,11 +97,25 @@ const CheckOutFrom = () => {
         },
       });
     if (confirmError) {
-      console.log("confirm error");
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: `Error: ${confirmError.message}`,
+        showConfirmButton: false,
+        timer: 1500
+      });
     } else {
-      console.log("payment intent", paymentIntent);
+      
       if (paymentIntent.status === "succeeded") {
-        console.log("transaction id", paymentIntent.id);
+        
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Your payment was successful! Transaction ID: ${paymentIntent.id}`,
+          showConfirmButton: false,
+          timer: 2000
+        });
+
         setTransactionId(paymentIntent.id);
 
         // save the data in database

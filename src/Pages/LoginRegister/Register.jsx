@@ -6,6 +6,7 @@ import logo from "/logo.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2"; // Import SweetAlert2
+import axios from "axios";
 
 const Register = () => {
   const { createNewUser, googleSignIn } = useContext(AuthContext);
@@ -53,6 +54,30 @@ const Register = () => {
     const email = e.target.email.value;
     const photoUrl = e.target.photoUrl.value;
     const password = e.target.password.value;
+
+    //send data in db
+
+    const user = { name, email, password, photoUrl };
+    axios
+      .post("http://localhost:5000/register", user)
+      .then((res) => {
+        
+        Swal.fire({
+          icon: "success",
+          title: "User Registered",
+          text: "Your account has been successfully registered!",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text:
+            error.response?.data?.message ||
+            "An error occurred while registering.",
+        });
+      });
 
     // Validate password before proceeding
     if (!validatePassword(password)) {

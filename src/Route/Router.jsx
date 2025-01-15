@@ -11,6 +11,9 @@ import Announcements from "../Components/Announcements/Announcements";
 import MakePayment from "../Pages/MakePayment/MakePayment";
 import PaymentPage from "../Pages/PaymentPage/PaymentPage";
 import PaymentHistory from "../Pages/PaymentPage/PaymentHistory";
+import AdminProfile from "../Pages/AdminDashboard/AdminProfile/AdminProfile";
+import MakeAnnouncement from "../Pages/AdminDashboard/MakeAnnouncement/MakeAnnouncement";
+import AgreementRequests from "../Pages/AdminDashboard/AgreementRequest/AgreementRequests";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,6 +48,18 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <MyProfile></MyProfile>, 
+      },
+      {
+        path:'adminProfile',
+        element:<AdminProfile></AdminProfile>
+      },
+      {
+        path:'agreementRequest',
+        element:<AgreementRequests></AgreementRequests>
+      },
+      {
+        path:'makeAnnouncements',
+        element:<MakeAnnouncement></MakeAnnouncement>
       },
       {
         path: "announcements",

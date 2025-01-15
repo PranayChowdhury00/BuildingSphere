@@ -124,6 +124,7 @@ const Apartment = () => {
       apartmentNo: apartment.apartmentNo,
       rent: apartment.rent,
       status: "pending",
+      role :'user'
     };
 
     try {
