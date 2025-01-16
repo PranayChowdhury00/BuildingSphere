@@ -8,41 +8,41 @@ function CouponsTable() {
     code: "",
     discountPercentage: "",
     couponDescription: "",
+    availability: "Available",
   });
+  console.log(newCoupon);
 
   useEffect(() => {
     // Fetch coupons from the server
     fetch("http://localhost:5000/api/getCoupons")
       .then((response) => response.json())
-      .then((data) => setCoupons(data));
+      .then((data) => setCoupons(data))
+      .catch((error) => console.error("Error fetching coupons:", error));
   }, []);
 
   const handleAddCoupon = () => {
+    // Validate fields
+
     fetch("http://localhost:5000/api/addCoupon", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newCoupon),
     })
-      .then((response) => response.json())
-      .then(() => {
-        setShowModal(false);
-        setNewCoupon({ code: "", discountPercentage: "", couponDescription: "" });
-
-        // Show SweetAlert
-        Swal.fire({
-          title: "Success!",
-          text: "Coupon added successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
-
-        // Refresh coupon list
-        fetch("http://localhost:5000/api/getCoupons")
-          .then((response) => response.json())
-          .then((data) => setCoupons(data));
+      .then((response) => {
+        response.json();
+        console.log(response);
+        if (response.status === 201) {
+          Swal.fire({
+            title: "Success",
+            text: "New coupon added",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setShowModal(false);
+        }
       })
+
       .catch(() => {
-        // Show error alert if adding coupon fails
         Swal.fire({
           title: "Error!",
           text: "Failed to add coupon. Please try again.",
@@ -52,13 +52,45 @@ function CouponsTable() {
       });
   };
 
+  const handleUpdateAvailability = (id, status) => {
+    fetch(`http://localhost:5000/api/updateCoupon/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ availability: status }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setCoupons((prevCoupons) =>
+            prevCoupons.map((coupon) =>
+              coupon._id === id ? { ...coupon, availability: status } : coupon
+            )
+          );
+          Swal.fire({
+            title: "Success!",
+            text: `Coupon marked as ${status}.`,
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        } else {
+          throw new Error("Failed to update coupon status.");
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error!",
+          text: "Could not update coupon status. Please try again.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        console.error("Error updating availability:", error);
+      });
+  };
+
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Coupons Management</h1>
-      <button
-        className="btn btn-primary"
-        onClick={() => setShowModal(true)}
-      >
+      <button className="btn btn-primary" onClick={() => setShowModal(true)}>
         Add Coupon
       </button>
       <table className="table w-full mt-6 border-collapse border border-gray-300">
@@ -67,14 +99,45 @@ function CouponsTable() {
             <th className="border border-gray-300 p-2">Code</th>
             <th className="border border-gray-300 p-2">Discount Percentage</th>
             <th className="border border-gray-300 p-2">Description</th>
+            <th className="border border-gray-300 p-2">Status</th>
           </tr>
         </thead>
         <tbody>
           {coupons.map((coupon) => (
             <tr key={coupon._id} className="hover:bg-gray-100">
               <td className="border border-gray-300 p-2">{coupon.code}</td>
-              <td className="border border-gray-300 p-2">{coupon.discountPercentage}</td>
-              <td className="border border-gray-300 p-2">{coupon.couponDescription}</td>
+              <td className="border border-gray-300 p-2">
+                {coupon.discountPercentage}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {coupon.couponDescription}
+              </td>
+              <td className="border border-gray-300 p-2 flex gap-2">
+                <button
+                  className={`btn ${
+                    coupon.availability === "Available"
+                      ? "btn-success"
+                      : "btn-outline"
+                  }`}
+                  onClick={() =>
+                    handleUpdateAvailability(coupon._id, "Available")
+                  }
+                >
+                  Available
+                </button>
+                <button
+                  className={`btn ${
+                    coupon.availability === "Unavailable"
+                      ? "btn-error"
+                      : "btn-outline"
+                  }`}
+                  onClick={() =>
+                    handleUpdateAvailability(coupon._id, "Unavailable")
+                  }
+                >
+                  Unavailable
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -90,7 +153,9 @@ function CouponsTable() {
                 placeholder="Coupon Code"
                 className="input input-bordered w-full"
                 value={newCoupon.code}
-                onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value })}
+                onChange={(e) =>
+                  setNewCoupon({ ...newCoupon, code: e.target.value })
+                }
               />
             </div>
             <div className="mb-4">
@@ -100,7 +165,10 @@ function CouponsTable() {
                 className="input input-bordered w-full"
                 value={newCoupon.discountPercentage}
                 onChange={(e) =>
-                  setNewCoupon({ ...newCoupon, discountPercentage: e.target.value })
+                  setNewCoupon({
+                    ...newCoupon,
+                    discountPercentage: e.target.value,
+                  })
                 }
               />
             </div>
@@ -110,15 +178,30 @@ function CouponsTable() {
                 className="textarea textarea-bordered w-full"
                 value={newCoupon.couponDescription}
                 onChange={(e) =>
-                  setNewCoupon({ ...newCoupon, couponDescription: e.target.value })
+                  setNewCoupon({
+                    ...newCoupon,
+                    couponDescription: e.target.value,
+                  })
                 }
               />
             </div>
-            <div className="flex justify-end gap-2">
-              <button
-                className="btn btn-success"
-                onClick={handleAddCoupon}
+            <div className="mb-4">
+              <select
+                className="select select-bordered w-full"
+                value={newCoupon.availability}
+                onChange={(e) =>
+                  setNewCoupon({
+                    ...newCoupon,
+                    availability: e.target.value,
+                  })
+                }
               >
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
+              </select>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button className="btn btn-success" onClick={handleAddCoupon}>
                 Submit
               </button>
               <button

@@ -1,52 +1,28 @@
-import { useState } from "react";
-
-import Coupon50 from '../../assets/Coupon/Coupon50.avif';
-import Coupon20 from '../../assets/Coupon/Coupon20.jpg';
-import CouponBuy1 from '../../assets/Coupon/buy1.avif';
-
-const coupons = [
-  {
-    id: 1,
-    title: "50% Off on apartment",
-    description: "Get 50% off on all apartment items. Valid for a limited time only.",
-    discount: "50%",
-    code: "ELEC50",
-    expiration: "2025-12-31",
-    image: Coupon50,
-  },
-  {
-    id: 2,
-    title: "20% Off on apartment",
-    description: "Save 20% on all apartment . Use code at checkout.",
-    discount: "20%",
-    code: "CLOTH20",
-    expiration: "2025-06-30",
-    image: Coupon20,
-  },
-  {
-    id: 3,
-    title: "30% Off on apartment",
-    description: "Buy one apartment in 30% off. Perfect for new apartment lovers!",
-    discount: "BOGO",
-    code: "COFFEEBOGO",
-    expiration: "2025-08-15",
-    image: CouponBuy1,
-  },
-];
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const HomeCoupons = () => {
   const [copied, setCopied] = useState("");
+  const [coupons, setCoupons] = useState([]);
 
   const copyCouponCode = (code) => {
     navigator.clipboard.writeText(code);
     setCopied(code);
-    setTimeout(() => setCopied(""), 2000); // Reset copied text after 2 seconds
+    setTimeout(() => setCopied(""), 2000);
   };
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/getCoupons").then((res) => {
+      setCoupons(res.data);
+    });
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-5">
       <div className="text-center mb-10">
-        <h2 className="text-4xl font-semibold mb-4 text-sky-500">Exclusive Coupons</h2>
+        <h2 className="text-4xl font-semibold mb-4 text-sky-500">
+          Exclusive Coupons
+        </h2>
         <p className="text-lg text-gray-700">
           Grab the best deals and discounts. Use these codes before they expire!
         </p>
@@ -59,24 +35,26 @@ const HomeCoupons = () => {
             key={coupon.id}
             className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105"
           >
-            <div className="relative">
-              <img
-                src={coupon.image}
-                alt={`Coupon for ${coupon.discount} off`}
-                className="w-full h-[200px] object-cover"
-              />
-              <div className="absolute top-4 left-4 bg-blue-500 text-white text-xl py-1 px-3 rounded-lg">
-                {coupon.discount}
-              </div>
-            </div>
             <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-800 ">{coupon.title}</h3>
-              <p className="text-gray-600 mt-2">{coupon.description}</p>
+              <p className="text-gray-600 mt-2">{coupon.couponDescription}</p>
+              <p className="text-xl text-sky-800">
+                Discount Percentage: {coupon.discountPercentage}%
+              </p>
               <div className="mt-4 flex items-center justify-between">
-                <span className="text-sm text-gray-500">Expires: {coupon.expiration}</span>
+                {/* Conditional Text Color Based on Availability */}
+                <span
+                  className={`text-xl ${
+                    coupon.availability === "Available"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  Availability: {coupon.availability}
+                </span>
                 <button
                   onClick={() => copyCouponCode(coupon.code)}
                   className="px-4 py-2 bg-sky-500 text-white rounded-md text-sm"
+                  disabled={coupon.availability === "Unavailable"} // Disable if unavailable
                 >
                   {copied === coupon.code ? "Copied!" : "Copy Code"}
                 </button>
