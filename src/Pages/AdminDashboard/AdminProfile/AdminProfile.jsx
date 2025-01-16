@@ -1,19 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const AdminProfile = () => {
   const { user } = useContext(AuthContext);
-  const [apartment, setApartment] = useState([]);
-  const [members, setMembers] = useState([]);
 
   // Fetch admin data
   const {
     data: adminData = null,
-    isLoading,
-    isError,
-    error,
+    isLoading: isAdminLoading,
+    isError: isAdminError,
+    error: adminError,
   } = useQuery({
     queryKey: ["adminData", user?.email],
     queryFn: async () => {
@@ -24,28 +22,36 @@ const AdminProfile = () => {
     enabled: !!user?.email,
   });
 
-  // Fetch members from the agreementsAdmin endpoint
-  useEffect(() => {
-    axios.get("http://localhost:5000/agreementsAdmin")
-      .then((res) => {
-        // Filter out only members
-        const filteredMembers = res.data.filter(user => user.role === 'member');
-        setMembers(filteredMembers);
-      })
-      .catch((error) => {
-        console.error("Error fetching members:", error);
-      });
+  // Fetch members data
+  const {
+    data: members = [],
+    isLoading: isMembersLoading,
+    isError: isMembersError,
+    error: membersError,
+  } = useQuery({
+    queryKey: ["members"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:5000/agreementsAdmin");
+      return response.data.filter((user) => user.role === "member");
+    },
+  });
 
-    axios.get("http://localhost:5000/apartments")
-      .then((res) => {
-        setApartment(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching apartments:", error);
-      });
-  }, []);
+  // Fetch apartments data
+  const {
+    data: apartments = [],
+    isLoading: isApartmentsLoading,
+    isError: isApartmentsError,
+    error: apartmentsError,
+  } = useQuery({
+    queryKey: ["apartments"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:5000/apartments");
+      return response.data;
+    },
+  });
 
-  if (isLoading) {
+  // Loading state
+  if (isAdminLoading || isMembersLoading || isApartmentsLoading) {
     return (
       <div>
         <span className="loading loading-spinner loading-lg"></span>
@@ -53,10 +59,14 @@ const AdminProfile = () => {
     );
   }
 
-  if (isError) {
+  // Error state
+  if (isAdminError || isMembersError || isApartmentsError) {
     return (
       <div>
-        <p>Error fetching admin data: {error.message}</p>
+        <p>
+          Error fetching data:{" "}
+          {adminError?.message || membersError?.message || apartmentsError?.message}
+        </p>
       </div>
     );
   }
@@ -85,21 +95,34 @@ const AdminProfile = () => {
           </figure>
           <div className="card-body">
             <div className="flex">
-              <p className="text-xl font-semibold "> <span className="text-sky-500">Name</span>: {adminData.name}</p>
-              <p className="text-xl font-medium "><span className="text-sky-500">Email</span>: {adminData.email}</p>
+              <p className="text-xl font-semibold ">
+                {" "}
+                <span className="text-sky-500">Name</span>: {adminData.name}
+              </p>
+              <p className="text-xl font-medium ">
+                <span className="text-sky-500">Email</span>: {adminData.email}
+              </p>
             </div>
             <hr />
             <div className="">
-              <p className="text-[17px] py-2 font-medium"><span className="text-sky-500">Total Room</span>: {apartment.length}</p>
-              <p className="text-[17px] py-2 font-medium"><span className="text-sky-500">Percentage of available rooms</span>: null</p>
-              <p className="text-[17px] py-2 font-medium"><span className="text-sky-500">Percentage of agreement/unavailable</span>: null</p>
-              <p className="text-[17px] py-2 font-medium"><span className="text-sky-500">Total Users</span>: {members.length}</p>
-              <p className="text-[17px] py-2 font-medium"><span className="text-sky-500">Total Members</span>: {members.length}</p>
+              <p className="text-[17px] py-2 font-medium">
+                <span className="text-sky-500">Total Room</span>: {apartments.length}
+              </p>
+              <p className="text-[17px] py-2 font-medium">
+                <span className="text-sky-500">Percentage of available rooms</span>: null
+              </p>
+              <p className="text-[17px] py-2 font-medium">
+                <span className="text-sky-500">Percentage of agreement/unavailable</span>: null
+              </p>
+              <p className="text-[17px] py-2 font-medium">
+                <span className="text-sky-500">Total Users</span>: {members.length}
+              </p>
+              <p className="text-[17px] py-2 font-medium">
+                <span className="text-sky-500">Total Members</span>: {members.length}
+              </p>
             </div>
           </div>
         </div>
-
-        
       </div>
     </div>
   );
