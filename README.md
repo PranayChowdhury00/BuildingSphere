@@ -61,7 +61,7 @@ The purpose of **BuildingSphere** is to provide a user-friendly platform for apa
 
 ## Screenshots
 Here are some screenshots showcasing the core features of the project:
-
+![Image Alt]
 ### Navbar
 ![Navbar Screenshot](./assets/navbar.png)
 
