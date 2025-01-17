@@ -5,7 +5,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 
 const Apartment = () => {
-  const { user } = useContext(AuthContext);
+  const { user,loading } = useContext(AuthContext);
   const [filteredApartments, setFilteredApartments] = useState([]);
   const [disabledApartments, setDisabledApartments] = useState([]);
   const [appliedApartment, setAppliedApartment] = useState(null);
@@ -138,7 +138,7 @@ const Apartment = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
-      <h2 className="text-3xl font-bold text-center mb-6">
+      <h2 className="text-3xl text-sky-500 font-bold text-center mb-6">
         Available Apartments
       </h2>
 

@@ -7,7 +7,6 @@ const Navbar = () => {
   const { user, signOutUser, loader, setLoader } = useContext(AuthContext);
 
   const handelLogOut = () => {
-     
     signOutUser()
       .then(() => {
         // console.log("User logged out successfully");
@@ -23,10 +22,28 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive
+              ? 'bg-gray-300 text-sky-500 px-4 py-2 rounded font-medium'
+              : 'text-sky-500'
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="apartment">Apartment</NavLink>
+        <NavLink
+          to="apartment"
+          className={({ isActive }) =>
+            isActive
+              ? 'bg-gray-300 text-sky-500 px-4 py-2 rounded font-medium'
+              : 'text-sky-500'
+          }
+        >
+          Apartment
+        </NavLink>
       </li>
     </>
   );
@@ -60,7 +77,7 @@ const Navbar = () => {
         </div>
         <Link to="/" className="flex items-center gap-2">
           <img className="w-14 h-14 rounded-full" src={logo} alt="BuildingSphere" />
-          <p>BuildingSphere</p>
+          <p className="text-sky-500 font-semibold text-[18px]">BuildingSphere</p>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -97,7 +114,7 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <Link to="/login">LogIn</Link>
+          <Link to="/login" className="text-sky-500 font-semibold">LogIn</Link>
         )}
       </div>
     </div>
