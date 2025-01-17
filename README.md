@@ -67,13 +67,13 @@ Here are some screenshots showcasing the core features of the project:
 ![Apartment Listing Screenshot](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/blob/main/apartment.png?raw=true)
 
 ### Member Dashboard
-![Member Dashboard Screenshot]([./assets/member-dashboard.png](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/Member.png?token=GHSAT0AAAAAAC3L2EHQSOMYNZ2JDBWHYWJWZ4KPM4Q)
+![Member Dashboard Screenshot](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/Member.png?token=GHSAT0AAAAAAC3L2EHQSOMYNZ2JDBWHYWJWZ4KPM4Q)
 
 ### Admin Dashboard
 ![Admin Dashboard Screenshot](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/blob/main/admin.png?raw=true)
 
 ### Mobile View of Homepage
-![Mobile View Screenshot]([./assets/mobile-homepage.png](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/MobileVew.png?token=GHSAT0AAAAAAC3L2EHQQ2WM2EOTTL6J6NFEZ4KPRSA)
+![Mobile View Screenshot](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/MobileVew.png?token=GHSAT0AAAAAAC3L2EHQQ2WM2EOTTL6J6NFEZ4KPRSA)
 
 ## Installation Instructions
 To set up **BuildingSphere** on your local machine, follow these steps:
