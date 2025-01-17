@@ -73,7 +73,7 @@ Here are some screenshots showcasing the core features of the project:
 ![Admin Dashboard Screenshot](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/blob/main/admin.png?raw=true)
 
 ### Mobile View of Homepage
-![Mobile View Screenshot]([./assets/mobile-homepage.png](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/MobileVew.png?token=GHSAT0AAAAAAC3L2EHQSK5YUJHO7SMR5MLYZ4KPNJQ)
+![Mobile View Screenshot]([./assets/mobile-homepage.png](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/MobileVew.png?token=GHSAT0AAAAAAC3L2EHQQ2WM2EOTTL6J6NFEZ4KPRSA)
 
 ## Installation Instructions
 To set up **BuildingSphere** on your local machine, follow these steps:
