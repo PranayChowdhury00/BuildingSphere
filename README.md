@@ -61,13 +61,14 @@ The purpose of **BuildingSphere** is to provide a user-friendly platform for apa
 
 ## Screenshots
 Here are some screenshots showcasing the core features of the project:
-
+## Home Page
+![Home Screenshot](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/Home.png?token=GHSAT0AAAAAAC3L2EHQSKNAHDIMJW2BJFKOZ4KPVFA)
 
 ### Apartment Listing
 ![Apartment Listing Screenshot](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/blob/main/apartment.png?raw=true)
 
 ### Member Dashboard
-![Member Dashboard Screenshot](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/Member.png?token=GHSAT0AAAAAAC3L2EHQSOMYNZ2JDBWHYWJWZ4KPM4Q)
+![Member Dashboard Screenshot](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/Member.png?token=GHSAT0AAAAAAC3L2EHRFZGSZQP25IMHAPHEZ4KPVSQ)
 
 ### Admin Dashboard
 ![Admin Dashboard Screenshot](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/blob/main/admin.png?raw=true)
