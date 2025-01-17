@@ -61,21 +61,19 @@ The purpose of **BuildingSphere** is to provide a user-friendly platform for apa
 
 ## Screenshots
 Here are some screenshots showcasing the core features of the project:
-![Image Alt]
-### Navbar
-![Navbar Screenshot](./assets/navbar.png)
+
 
 ### Apartment Listing
-![Apartment Listing Screenshot](./assets/apartments.png)
+![Apartment Listing Screenshot](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/blob/main/apartment.png?raw=true)
 
 ### Member Dashboard
-![Member Dashboard Screenshot](./assets/member-dashboard.png)
+![Member Dashboard Screenshot]([./assets/member-dashboard.png](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/Member.png?token=GHSAT0AAAAAAC3L2EHQSOMYNZ2JDBWHYWJWZ4KPM4Q))
 
 ### Admin Dashboard
-![Admin Dashboard Screenshot](./assets/admin-dashboard.png)
+![Admin Dashboard Screenshot](https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/blob/main/admin.png?raw=true)
 
 ### Mobile View of Homepage
-![Mobile View Screenshot](./assets/mobile-homepage.png)
+![Mobile View Screenshot]([./assets/mobile-homepage.png](https://raw.githubusercontent.com/Programming-Hero-Web-Course4/b10a12-client-side-PranayChowdhury00/refs/heads/main/MobileVew.png?token=GHSAT0AAAAAAC3L2EHQSK5YUJHO7SMR5MLYZ4KPNJQ))
 
 ## Installation Instructions
 To set up **BuildingSphere** on your local machine, follow these steps:
