@@ -22,7 +22,7 @@ const CheckOutFrom = () => {
     const fetchAgreement = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/agreements?email=${user?.email}`
+          `https://server-site-six-eta.vercel.app/agreements?email=${user?.email}`
         );
         if (isMounted && response.data && response.data.length > 0) {
           setAgreement(response.data[0]);
@@ -42,7 +42,7 @@ const CheckOutFrom = () => {
       const fetchClientSecret = async () => {
         try {
           const response = await axios.post(
-            `http://localhost:5000/create-payment-intent`,
+            `https://server-site-six-eta.vercel.app/create-payment-intent`,
             {
               price: totalPrice,
             }
@@ -81,7 +81,7 @@ const CheckOutFrom = () => {
       console.error("Payment Method Error:", stripeError);
       setError(stripeError.message);
     } else {
-      console.log("Payment Method Success:", paymentMethod);
+      // console.log("Payment Method Success:", paymentMethod);
       setError("");
     }
 
@@ -127,8 +127,8 @@ const CheckOutFrom = () => {
           id:agreement?._id
 
         };
-        const res = await axios.post("http://localhost:5000/payment", payment);
-        console.log("payment save", res?.data);
+        const res = await axios.post("https://server-site-six-eta.vercel.app/payment", payment);
+        // console.log("payment save", res?.data);
       }
     }
   };

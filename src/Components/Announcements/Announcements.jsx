@@ -4,7 +4,7 @@ const Announcements = () => {
     const [announcements, setAnnouncements] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/announcements") // Replace with your API endpoint
+        fetch("https://server-site-six-eta.vercel.app/announcements") // Replace with your API endpoint
             .then((res) => res.json())
             .then((data) => setAnnouncements(data))
             .catch((error) => console.error("Error fetching announcements:", error));

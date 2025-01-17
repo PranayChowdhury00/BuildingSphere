@@ -5,13 +5,13 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 const PaymentHistory = () => {
     const { user } = useContext(AuthContext);
     const [history, setHistory] = useState([]);
-console.log(history);
+// console.log(history);
     useEffect(() => {
         const fetchHistory = async () => {
             if (!user?.email) return; // Ensure email exists before fetching
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/payment/${user.email}`
+                    `https://server-site-six-eta.vercel.app/payment/${user.email}`
                 );
                 setHistory(response.data);
             } catch (error) {

@@ -21,7 +21,7 @@ const MakeAnnouncement = () => {
     setLoading(true);
     try {
       // Send POST request to create the announcement
-      const response = await axios.post("http://localhost:5000/announcements", {
+      const response = await axios.post("https://server-site-six-eta.vercel.app/announcements", {
         title,
         description,
       });

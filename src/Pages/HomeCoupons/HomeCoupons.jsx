@@ -12,7 +12,7 @@ const HomeCoupons = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/getCoupons").then((res) => {
+    axios.get("https://server-site-six-eta.vercel.app/api/getCoupons").then((res) => {
       setCoupons(res.data);
     });
   }, []);

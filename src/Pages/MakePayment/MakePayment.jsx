@@ -20,7 +20,7 @@ const MakePayment = () => {
     queryFn: async () => {
       if (!user?.email) return null; 
       const response = await axios.get(
-        `http://localhost:5000/agreements?email=${user.email}`
+        `https://server-site-six-eta.vercel.app/agreements?email=${user.email}`
       );
       return response.data?.[0] || null; 
     },

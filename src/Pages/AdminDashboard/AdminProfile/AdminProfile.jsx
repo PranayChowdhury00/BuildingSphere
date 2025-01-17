@@ -16,7 +16,7 @@ const AdminProfile = () => {
     queryKey: ["adminData", user?.email],
     queryFn: async () => {
       if (!user?.email) return null;
-      const response = await axios.get("http://localhost:5000/register");
+      const response = await axios.get("https://server-site-six-eta.vercel.app/register");
       return response.data.find((u) => u.email === user.email);
     },
     enabled: !!user?.email,
@@ -31,7 +31,7 @@ const AdminProfile = () => {
   } = useQuery({
     queryKey: ["members"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/agreementsAdmin");
+      const response = await axios.get("https://server-site-six-eta.vercel.app/agreementsAdmin");
       return response.data.filter((user) => user.role === "member");
     },
   });
@@ -45,7 +45,7 @@ const AdminProfile = () => {
   } = useQuery({
     queryKey: ["apartments"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/apartments");
+      const response = await axios.get("https://server-site-six-eta.vercel.app/apartments");
       return response.data;
     },
   });

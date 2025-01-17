@@ -17,7 +17,7 @@ const UserDashboard = () => {
     const fetchUserAgreements = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/agreements?email=${user.email}`
+          `https://server-site-six-eta.vercel.app/agreements?email=${user.email}`
         );
         if (isMounted) {
           if (response.data.some((agreement) => agreement.role === 'member')) {
@@ -25,7 +25,7 @@ const UserDashboard = () => {
           }
         }
       } catch (err) {
-        console.log("Failed to fetch agreements:", err);
+        // console.log("Failed to fetch agreements:", err);
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -47,13 +47,13 @@ const UserDashboard = () => {
     if (user) {
       const checkAdminRole = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/register");
+          const response = await axios.get("https://server-site-six-eta.vercel.app/register");
           const foundUser = response.data.find((u) => u.email === user.email);
           if (foundUser && foundUser.role === "admin") {
             setAdmin(true);
           }
         } catch (err) {
-          console.log("Error checking admin role:", err);
+          console.error("Error checking admin role:", err);
         }
       };
 

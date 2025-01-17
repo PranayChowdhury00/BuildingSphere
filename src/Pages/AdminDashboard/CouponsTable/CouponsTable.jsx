@@ -4,33 +4,31 @@ import Swal from "sweetalert2";
 function CouponsTable() {
   const [coupons, setCoupons] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [newCoupon, setNewCoupon] = useState({
     code: "",
     discountPercentage: "",
     couponDescription: "",
     availability: "Available",
   });
-  console.log(newCoupon);
 
   useEffect(() => {
-    // Fetch coupons from the server
-    fetch("http://localhost:5000/api/getCoupons")
+    setLoading(true);
+    fetch("https://server-site-six-eta.vercel.app/api/getCoupons")
       .then((response) => response.json())
       .then((data) => setCoupons(data))
-      .catch((error) => console.error("Error fetching coupons:", error));
+      .catch((error) => console.error("Error fetching coupons:", error))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleAddCoupon = () => {
-    // Validate fields
-
-    fetch("http://localhost:5000/api/addCoupon", {
+    setLoading(true);
+    fetch("https://server-site-six-eta.vercel.app/api/addCoupon", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newCoupon),
     })
       .then((response) => {
-        response.json();
-        console.log(response);
         if (response.status === 201) {
           Swal.fire({
             title: "Success",
@@ -41,7 +39,6 @@ function CouponsTable() {
           setShowModal(false);
         }
       })
-
       .catch(() => {
         Swal.fire({
           title: "Error!",
@@ -49,11 +46,12 @@ function CouponsTable() {
           icon: "error",
           confirmButtonText: "OK",
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleUpdateAvailability = (id, status) => {
-    fetch(`http://localhost:5000/api/updateCoupon/${id}`, {
+    fetch(`https://server-site-six-eta.vercel.app/api/updateCoupon/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ availability: status }),
@@ -90,59 +88,69 @@ function CouponsTable() {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Coupons Management</h1>
-      <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+      {loading && (
+        <div className="flex justify-center items-center mb-4">
+          <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+        </div>
+      )}
+      <button
+        className="btn btn-primary mb-4"
+        onClick={() => setShowModal(true)}
+        disabled={loading}
+      >
         Add Coupon
       </button>
-      <table className="table w-full mt-6 border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 p-2">Code</th>
-            <th className="border border-gray-300 p-2">Discount Percentage</th>
-            <th className="border border-gray-300 p-2">Description</th>
-            <th className="border border-gray-300 p-2">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {coupons.map((coupon) => (
-            <tr key={coupon._id} className="hover:bg-gray-100">
-              <td className="border border-gray-300 p-2">{coupon.code}</td>
-              <td className="border border-gray-300 p-2">
-                {coupon.discountPercentage}
-              </td>
-              <td className="border border-gray-300 p-2">
-                {coupon.couponDescription}
-              </td>
-              <td className="border border-gray-300 p-2 flex gap-2">
-                <button
-                  className={`btn ${
-                    coupon.availability === "Available"
-                      ? "btn-success"
-                      : "btn-outline"
-                  }`}
-                  onClick={() =>
-                    handleUpdateAvailability(coupon._id, "Available")
-                  }
-                >
-                  Available
-                </button>
-                <button
-                  className={`btn ${
-                    coupon.availability === "Unavailable"
-                      ? "btn-error"
-                      : "btn-outline"
-                  }`}
-                  onClick={() =>
-                    handleUpdateAvailability(coupon._id, "Unavailable")
-                  }
-                >
-                  Unavailable
-                </button>
-              </td>
+      {!loading && (
+        <table className="table w-full mt-6 border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-300 p-2">Code</th>
+              <th className="border border-gray-300 p-2">Discount Percentage</th>
+              <th className="border border-gray-300 p-2">Description</th>
+              <th className="border border-gray-300 p-2">Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            {coupons.map((coupon) => (
+              <tr key={coupon._id} className="hover:bg-gray-100">
+                <td className="border border-gray-300 p-2">{coupon.code}</td>
+                <td className="border border-gray-300 p-2">
+                  {coupon.discountPercentage}
+                </td>
+                <td className="border border-gray-300 p-2">
+                  {coupon.couponDescription}
+                </td>
+                <td className="border border-gray-300 p-2 flex gap-2">
+                  <button
+                    className={`btn ${
+                      coupon.availability === "Available"
+                        ? "btn-success"
+                        : "btn-outline"
+                    }`}
+                    onClick={() =>
+                      handleUpdateAvailability(coupon._id, "Available")
+                    }
+                  >
+                    Available
+                  </button>
+                  <button
+                    className={`btn ${
+                      coupon.availability === "Unavailable"
+                        ? "btn-error"
+                        : "btn-outline"
+                    }`}
+                    onClick={() =>
+                      handleUpdateAvailability(coupon._id, "Unavailable")
+                    }
+                  >
+                    Unavailable
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       {showModal && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">

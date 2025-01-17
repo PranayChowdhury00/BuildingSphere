@@ -13,7 +13,7 @@ const Apartment = () => {
   const { data: apartments = [], isLoading, isError, error } = useQuery({
     queryKey: ['apartments'],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/apartments");
+      const response = await axios.get("https://server-site-six-eta.vercel.app/apartments");
       return response.data;
     },
   });
@@ -101,7 +101,7 @@ const Apartment = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/agreements",
+        "https://server-site-six-eta.vercel.app/agreements",
         agreementData
       );
 

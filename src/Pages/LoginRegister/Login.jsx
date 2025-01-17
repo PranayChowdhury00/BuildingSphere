@@ -14,7 +14,7 @@ const Login = () => {
   const handleGoogle = () => {
     googleSignIn()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         navigate("/");
       })
       .catch((error) => {
@@ -29,7 +29,7 @@ const Login = () => {
     
     signInUser(email, password)
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         navigate("/");
       })
       .catch((error) => {

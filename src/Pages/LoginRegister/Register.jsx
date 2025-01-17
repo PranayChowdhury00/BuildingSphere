@@ -59,7 +59,7 @@ const Register = () => {
 
     const user = { name, email, password, photoUrl };
     axios
-      .post("http://localhost:5000/register", user)
+      .post("https://server-site-six-eta.vercel.app/register", user)
       .then((res) => {
         
         Swal.fire({

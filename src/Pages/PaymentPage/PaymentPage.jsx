@@ -17,7 +17,7 @@ const PaymentPage = () => {
     const fetchAgreement = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/agreements?email=${user?.email}`
+          `https://server-site-six-eta.vercel.app/agreements?email=${user?.email}`
         );
         if (response.data && response.data.length > 0) {
           setAgreement(response.data[0]);
@@ -33,7 +33,7 @@ const PaymentPage = () => {
   const handleCouponApply = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/validateCoupon",
+        "https://server-site-six-eta.vercel.app/validateCoupon",
         { couponCode }
       );
       if (response.data.valid) {
