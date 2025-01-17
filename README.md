@@ -129,7 +129,7 @@ We welcome contributions to **BuildingSphere**! If you have ideas for improvemen
 5. Submit a pull request with a detailed description of your changes.
 
 ## License
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the **Pranay Chowdhury**.
 
 ---
 
