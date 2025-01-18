@@ -16,7 +16,10 @@
 The purpose of **BuildingSphere** is to provide a user-friendly platform for apartment bookings, payment management, and role-based access for users, members, and administrators. The platform allows users to apply for apartments, manage their rentals and payments, while admins can oversee the entire system. The application is built to be scalable, secure, and responsive.
 
 ## Live URL
-[Visit BuildingSphere](https://assignment-12-77319.web.app/)
+[Visit BuildingSphere](https://assignment-12-77319.web.app/) 
+
+# Admin email: pranaydas@gmail.com
+# Admin password: Pranay2580@#
 
 ## Key Features
 - **User Authentication**: Seamless login experience with options for email/password or social login (Google or GitHub).
