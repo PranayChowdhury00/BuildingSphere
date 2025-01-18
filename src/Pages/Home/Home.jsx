@@ -4,6 +4,8 @@ import AboutTheBuilding from '../AboutTheBuilding/AboutTheBuilding';
 import HomeCoupons from '../HomeCoupons/HomeCoupons';
 import ApartmentLocation from '../ApartmentLocation/ApartmentLocation';
 import Partners from './Partners/Partners';
+import FeaturedProperties from './FeaturedProperties/FeaturedProperties';
+import TotalUsersAndSell from './TotalUserAndSell/TotalUsersAndSell';
 
 const Home = () => {
     return (
@@ -13,6 +15,8 @@ const Home = () => {
             <HomeCoupons></HomeCoupons>
             <ApartmentLocation></ApartmentLocation>
             <Partners></Partners>
+            <FeaturedProperties></FeaturedProperties>
+            <TotalUsersAndSell></TotalUsersAndSell>
         </div>
     );
 };

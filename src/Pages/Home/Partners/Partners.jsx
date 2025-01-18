@@ -15,7 +15,7 @@ const Partners = () => {
   return (
     <div className=" mt-10">
       <div className="text-center">
-        <h1 className="text-2xl font-bold md:text-5xl py-4 mb-3">
+        <h1 className="text-2xl text-sky-500 font-bold md:text-5xl py-4 mb-3">
           Hundreds of Partners <br /> Around the World
         </h1>
         <div className="flex justify-center items-center ">
