@@ -6,6 +6,7 @@ import ApartmentLocation from '../ApartmentLocation/ApartmentLocation';
 import Partners from './Partners/Partners';
 import FeaturedProperties from './FeaturedProperties/FeaturedProperties';
 import TotalUsersAndSell from './TotalUserAndSell/TotalUsersAndSell';
+import BuySell from './BuySell/BuySell';
 
 const Home = () => {
     return (
@@ -17,6 +18,7 @@ const Home = () => {
             <Partners></Partners>
             <FeaturedProperties></FeaturedProperties>
             <TotalUsersAndSell></TotalUsersAndSell>
+            <BuySell></BuySell>
         </div>
     );
 };
