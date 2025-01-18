@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12 mt-20 min-h-screen">
+    <footer className="bg-gray-900 text-white py-12 mt-20">
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12">
         {/* Logo and Company Info */}
         <div>
@@ -28,7 +28,7 @@ const Footer = () => {
               (+880) 1303572144
             </a>
             <a
-              href="pranaychowdhury00@gamail.com"
+              href="mailto:pranaychowdhury00@gamail.com"
               className="flex items-center text-gray-400 hover:text-sky-400 mt-2"
             >
               <FaEnvelope className="mr-2" />
@@ -107,7 +107,7 @@ const Footer = () => {
               <FaInstagram size={30} />
             </a>
             <a
-              href="https://www.linkedin.com/in/pranay-chowdhury-741396318/?fbclid=IwY2xjawHyD8dleHRuA2FlbQIxMAABHSZeDWFmGBQSByLWkKUy4WAQ-7I4YtJrfojtH2Pl2sI1xtgE16cIlADGfg_aem_rgjszjch_rClhavfiuhlcA"
+              href="https://www.linkedin.com/in/pranay-chowdhury-741396318/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-sky-400 transition-all duration-300"
@@ -137,7 +137,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <hr className="ml-[5%] mr-[5%] mt-7"/>
+      <hr className="ml-[5%] mr-[5%] mt-7" />
       {/* Bottom Footer */}
       <div className="text-center mt-10">
         <p className="text-gray-400 text-sm">
