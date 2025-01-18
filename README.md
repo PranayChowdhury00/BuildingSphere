@@ -18,8 +18,8 @@ The purpose of **BuildingSphere** is to provide a user-friendly platform for apa
 ## Live URL
 [Visit BuildingSphere](https://assignment-12-77319.web.app/) 
 
-## Admin email: pranaydas@gmail.com
-## Admin password: Pranay2580@#
+# Admin email: pranaydas@gmail.com
+# Admin password: Pranay2580@#
 
 ## Key Features
 - **User Authentication**: Seamless login experience with options for email/password or social login (Google or GitHub).
