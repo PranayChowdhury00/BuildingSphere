@@ -31,8 +31,23 @@ const AdminProfile = () => {
   } = useQuery({
     queryKey: ["members"],
     queryFn: async () => {
-      const response = await axios.get("https://server-site-six-eta.vercel.app/agreementsAdmin");
+      const response = await axios.get("https://server-site-six-eta.vercel.app/agreements-all");
+      console.log(response);
       return response.data.filter((user) => user.role === "member");
+    },
+  });
+  // Fetch user data
+  const {
+    data: users = [],
+    isLoading: isUsersLoading,
+    isError: isUsersError,
+    error: usersError,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const response = await axios.get("https://server-site-six-eta.vercel.app/agreements-all");
+      console.log(response);
+      return response.data.filter((user) => user.role === "user");
     },
   });
 
@@ -51,7 +66,7 @@ const AdminProfile = () => {
   });
 
   // Loading state
-  if (isAdminLoading || isMembersLoading || isApartmentsLoading) {
+  if (isAdminLoading || isMembersLoading || isApartmentsLoading || isUsersLoading) {
     return (
       <div>
         <span className="loading loading-spinner loading-lg"></span>
@@ -60,12 +75,12 @@ const AdminProfile = () => {
   }
 
   // Error state
-  if (isAdminError || isMembersError || isApartmentsError) {
+  if (isAdminError || isMembersError || isApartmentsError || isUsersError) {
     return (
       <div>
         <p>
           Error fetching data:{" "}
-          {adminError?.message || membersError?.message || apartmentsError?.message}
+          {adminError?.message || membersError?.message || apartmentsError?.message || usersError?.message}
         </p>
       </div>
     );
@@ -115,7 +130,7 @@ const AdminProfile = () => {
                 <span className="text-sky-500">Percentage of agreement/unavailable</span>: null
               </p>
               <p className="text-[17px] py-2 font-medium">
-                <span className="text-sky-500">Total Users</span>: {members.length}
+                <span className="text-sky-500">Total Users</span>: {users.length}
               </p>
               <p className="text-[17px] py-2 font-medium">
                 <span className="text-sky-500">Total Members</span>: {members.length}
