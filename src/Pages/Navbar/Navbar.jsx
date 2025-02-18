@@ -4,6 +4,8 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import logo from "/logo.jpg";
 import Swal from "sweetalert2";
 
+//TO DO : i have to add 5 page in nav 2 for login and 3 for normal user
+
 const Navbar = () => {
   const { user, signOutUser, loader } = useContext(AuthContext);
 
