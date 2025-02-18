@@ -55,6 +55,34 @@ const Navbar = () => {
           Apartment
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="contactUs"
+          className={({ isActive }) =>
+            isActive
+              ? 'bg-gray-300 text-sky-500 px-4 py-2 rounded font-medium'
+              : 'text-sky-500'
+          }
+        >
+          Contact Us
+        </NavLink>
+      </li>
+      {
+        user && <li>
+        <NavLink
+          to="myPayments"
+          className={({ isActive }) =>
+            isActive
+              ? 'bg-gray-300 text-sky-500 px-4 py-2 rounded font-medium'
+              : 'text-sky-500'
+          }
+        >
+          My Payments
+        </NavLink>
+      </li>
+      }
+      
+
     </>
   );
 

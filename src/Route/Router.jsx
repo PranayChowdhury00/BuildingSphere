@@ -17,6 +17,8 @@ import AgreementRequests from "../Pages/AdminDashboard/AgreementRequest/Agreemen
 import ManageMembers from "../Pages/AdminDashboard/ManageMembers/ManageMembers";
 import CouponsTable from "../Pages/AdminDashboard/CouponsTable/CouponsTable";
 import Page404 from "../Page404/Page404";
+import ContactUs from "../Pages/Contactus/ContactUs";
+import MyPayments from "../Pages/MyPayments/MyPayments";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
       {
         path: "/apartment",
         element: <Apartment></Apartment>,
+      },
+      {
+        path:'/contactUs',
+        element:<ContactUs></ContactUs>
+      },
+      {
+        path:'/myPayments',
+        element:<MyPayments></MyPayments>
       },
       {
         path: "/login",
