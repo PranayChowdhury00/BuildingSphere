@@ -19,6 +19,7 @@ import CouponsTable from "../Pages/AdminDashboard/CouponsTable/CouponsTable";
 import Page404 from "../Page404/Page404";
 import ContactUs from "../Pages/Contactus/ContactUs";
 import MyPayments from "../Pages/MyPayments/MyPayments";
+import About from "../Pages/About/About";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
       },
       {
         path:'/myPayments',
-        element:<MyPayments></MyPayments>
+        element:<PrivetRoute><MyPayments></MyPayments></PrivetRoute>
+      },
+      {
+        path:'/about',
+        element:<About></About>
       },
       {
         path: "/login",

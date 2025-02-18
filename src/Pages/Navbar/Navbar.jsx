@@ -81,6 +81,18 @@ const Navbar = () => {
         </NavLink>
       </li>
       }
+      <li>
+        <NavLink
+          to="about"
+          className={({ isActive }) =>
+            isActive
+              ? 'bg-gray-300 text-sky-500 px-4 py-2 rounded font-medium'
+              : 'text-sky-500'
+          }
+        >
+          About Us
+        </NavLink>
+      </li>
       
 
     </>
